@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 49d7571d97a24f4419d09f6641211421
+guid: 31fbf938ef083c64690c7d7f9d448b50
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -8,9 +8,9 @@ TrueTypeFontImporter:
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: Sary Soft
+  fontName: Fira Sans
   fontNames:
-  - Sary Soft
+  - Fira Sans
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
