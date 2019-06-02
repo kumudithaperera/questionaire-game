@@ -13,7 +13,15 @@ MonoBehaviour:
   m_Name: Question 3
   m_EditorClassIdentifier: 
   info: Golf player Vijay Singh belongs to which country?
-  answers: []
+  answers:
+  - info: Fiji
+    iscorrect: 1
+  - info: USA
+    iscorrect: 0
+  - info: India
+    iscorrect: 0
+  - info: UK
+    iscorrect: 0
   userTimer: 0
-  timer: 120
+  timer: 60
   addScore: 10

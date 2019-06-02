@@ -12,8 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42f4d273da0147440991a4d685a1f70a, type: 3}
   m_Name: Question 1
   m_EditorClassIdentifier: 
-  info: Entomology is the science that studies
-  answers: []
+  info: Entomology is the science that studies?
+  answers:
+  - info: Behavior of human beings
+    iscorrect: 0
+  - info: Insects
+    iscorrect: 1
+  - info: The origin and history of technical and scientific terms
+    iscorrect: 0
+  - info: The formation of rocks
+    iscorrect: 0
   userTimer: 0
-  timer: 120
+  timer: 60
   addScore: 10

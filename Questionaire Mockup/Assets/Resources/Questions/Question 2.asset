@@ -12,8 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42f4d273da0147440991a4d685a1f70a, type: 3}
   m_Name: Question 2
   m_EditorClassIdentifier: 
-  info: Hitler party which came into power in 1933 is known as
-  answers: []
+  info: Hitler party which came into power in 1933 is known as?
+  answers:
+  - info: Labour Party
+    iscorrect: 0
+  - info: Ku-Klux-Klan
+    iscorrect: 0
+  - info: Democratic Party
+    iscorrect: 0
+  - info: Nazi Party
+    iscorrect: 1
   userTimer: 0
-  timer: 120
+  timer: 60
   addScore: 10
