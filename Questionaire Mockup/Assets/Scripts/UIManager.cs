@@ -170,4 +170,6 @@ public class UIManager : MonoBehaviour
         }
         currentAnswers.Clear();
     }
+
+    
 }

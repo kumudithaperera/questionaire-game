@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42f4d273da0147440991a4d685a1f70a, type: 3}
   m_Name: Question 4
   m_EditorClassIdentifier: 
-  info: The ozone layer restricts?
+  info: The ozone layer restricts
   answers:
   - info: Visible light
     iscorrect: 0

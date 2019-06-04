@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -21,16 +22,30 @@ public class GameManager : MonoBehaviour
     private List<int> Finishedquestions = new List<int>();
     private int currentQuestion = 0;
 
+    private IEnumerator IEwaitTillNExtRound = null;
+
     void Start()
     {
         LoadQuestions();
 
-        foreach (var questions in Questions)
-        {
-            Debug.Log(questions.Info);
-        }
-
         Display();
+    }
+    
+   public void UpdateAnswer(AnswerData newAnswer)
+    {
+        
+        if(Questions[currentQuestion].GetAnswerType == global::Questions.AnswerType.Single)
+        {
+            foreach (var answer in PickedAnswers)
+            {
+                if(answer != newAnswer)
+                {
+                    answer.Reset();
+                }
+                PickedAnswers.Clear();
+                PickedAnswers.Add(newAnswer);
+            }
+        }
     }
 
     public void ErasedAnswers()
@@ -53,6 +68,26 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void Accept()
+    {
+        bool isCorrect = CheckAnswers();
+        Finishedquestions.Add(currentQuestion);
+
+        UpdateScore((isCorrect) ? Questions[currentQuestion].AddScore : -Questions[currentQuestion].AddScore);
+
+        if(IEwaitTillNExtRound != null)
+        {
+            StopCoroutine(IEwaitTillNExtRound);
+        }
+        IEwaitTillNExtRound = WaitTillNextRound();
+        StartCoroutine(IEwaitTillNExtRound);
+    }
+
+    IEnumerator WaitTillNextRound()
+    {
+        yield return new WaitForSeconds(GameUtility.ResolutionDelayTime);
+        Display();
+    }
     Questions GetRandomQuestion()
     {
         var randomIndex = GetRandomQuestionIndex();
@@ -81,6 +116,40 @@ public class GameManager : MonoBehaviour
         for(int i = 0; i< objs.Length; i++)
         {
             questions[i] = (Questions)objs[i];
+        }
+    }
+
+    bool CheckAnswers()
+    {
+        if (!CompareAnswers())
+        {
+            return false;
+        }
+        return true;
+    }
+
+    bool CompareAnswers()
+    {
+        if (PickedAnswers.Count > 0)
+        {
+            List<int> c = Questions[currentQuestion].GetCorrectAnswer();
+            List<int> p = PickedAnswers.Select(x => x.AnswerIndex).ToList();
+
+            var f = c.Except(p).ToList();
+            var s = p.Except(c).ToList();
+
+            return !f.Any() && !s.Any();
+        }
+        return false;
+    }
+
+    private void UpdateScore(int add)
+    {
+        events.CurrentFinalScore += add;
+
+        if(events.ScoreUpdated != null)
+        {
+            events.ScoreUpdated();
         }
     }
 }

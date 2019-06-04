@@ -27,12 +27,16 @@ public struct Answer {
 
 public class Questions : ScriptableObject
 {
+    //for the type of answer user needed
+    public enum AnswerType {Single}
+   
 
     [SerializeField] private string info = string.Empty;
     public string Info {
         get
         {
             return info;
+          
         }
     }
 
@@ -44,6 +48,8 @@ public class Questions : ScriptableObject
             return answers;
         }
     }
+
+    //parameters
 
     [SerializeField] private bool userTimer = false;
     public bool UserTimer
@@ -60,6 +66,15 @@ public class Questions : ScriptableObject
             return timer = 0;
         }
      }
+
+    [SerializeField] private AnswerType answerType = AnswerType.Single;
+    public AnswerType GetAnswerType
+    {
+        get
+        {
+            return answerType;
+        }
+    }
 
     [SerializeField] private int addScore = 10;
     public int AddScore {
