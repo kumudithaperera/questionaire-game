@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class AnswerData : MonoBehaviour
 {
-
     [Header("UI Elements")]
     [SerializeField] Text infoTextObject;
     [SerializeField] Image toggle;

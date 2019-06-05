@@ -175,13 +175,14 @@ public class UIManager : MonoBehaviour
     void OnEnable() {
 
         events.updateQuestionUI += UpdateQuestionUI;
-        events.DispalyResolutonScreen += DisplayResolution;
+        events.ScoreUpdated += UpdateScoreUI;
     }
 
     void onDisable()
     {
         events.updateQuestionUI -= UpdateQuestionUI;
-        events.DispalyResolutonScreen -= DisplayResolution;
+        events.ScoreUpdated -= UpdateScoreUI;
+
 
     }
 
@@ -196,56 +197,12 @@ public class UIManager : MonoBehaviour
         CreateAnswers(questions);
     }
 
-    void DisplayResolution(ResolutionScreenType type, int score)
-    {
-        UpdateResUI(type, score);
-        uIElements.ResolutionScreenAnimator.SetInteger(resStateParaHash, 2);
-        uIElements.MainCanvasGroup.blocksRaycasts = false;
-
-        if(type != ResolutionScreenType.Finish)
-        {
-            if (IE_DisplayTimedResolution != null)
-            {
-                StopCoroutine(IE_DisplayTimedResolution);
-            }
-            IE_DisplayTimedResolution = DispalyTimeResolution();
-            StartCoroutine(IE_DisplayTimedResolution);
-        }
-    }
 
     IEnumerator DispalyTimeResolution()
     {
         yield return new WaitForSeconds(GameUtility.ResolutionDelayTime);
-        uIElements.ResolutionScreenAnimator.SetInteger(resStateParaHash, 1);
+        
         uIElements.MainCanvasGroup.blocksRaycasts = true;
-    }
-
-    void UpdateResUI(ResolutionScreenType type, int score)
-    {
-        var highscore = PlayerPrefs.GetInt(GameUtility.SavePrefKey);
-
-        switch (type)
-        {
-            case ResolutionScreenType.Correct:
-                uIElements.ResolutonBackground.color = parameters.CorrectBGColor;
-                uIElements.ResolutonSateInfoText.text = "Correct!";
-                uIElements.ResolutonScoreText.text = "+" + score;
-                break;
-            case ResolutionScreenType.Incorrect:
-                uIElements.ResolutonBackground.color = parameters.IncorrectBGColor;
-                uIElements.ResolutonSateInfoText.text = "Wrong!";
-                uIElements.ResolutonScoreText.text = "-" + score;
-                break;
-            case ResolutionScreenType.Finish:
-                uIElements.ResolutonBackground.color = parameters.FinalBGColor;
-                uIElements.ResolutonSateInfoText.text = "Final Score";
-
-                StartCoroutine(CalculateScore());
-                uIElements.FinishedUIElements.gameObject.SetActive(true);
-                uIElements.HighScoreText.gameObject.SetActive(true);
-                uIElements.HighScoreText.text = ((highscore > events.StartUpHighscore) ? "<color=Yellow> new </color>" : String.Empty) + "HignScore" + highscore;
-                break;
-        }
     }
 
     IEnumerator CalculateScore()
@@ -289,5 +246,9 @@ public class UIManager : MonoBehaviour
         currentAnswers.Clear();
     }
 
-    
+    void UpdateScoreUI()
+    {
+        uIElements.ScoreText.text = "Score: " + events.CurrentFinalScore;
+    }
+
 }

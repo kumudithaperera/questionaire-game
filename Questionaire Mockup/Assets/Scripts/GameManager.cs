@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,9 +20,11 @@ public class GameManager : MonoBehaviour
     private List<AnswerData> PickedAnswers = new List<AnswerData>();
 
     private List<int> Finishedquestions = new List<int>();
+
     private int currentQuestion = 0;
 
     private IEnumerator IEwaitTillNExtRound = null;
+
 
     private bool IsFinished
     {
@@ -32,9 +34,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void OnEnable ()
+    {
+        events.updateQuestionAnswer += UpdateAnswer;
+    }
+
+    void OnDisable()
+    {
+        events.updateQuestionAnswer -= UpdateAnswer;
+    }
+
     void Start()
     {
+        
         LoadQuestions();
+
+        events.CurrentFinalScore = 0;
 
         Display();
     }
@@ -74,23 +89,20 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogWarning("somethings Up");
         }
-    }
 
+        
+    }
+    
     public void Accept()
     {
+        
         bool isCorrect = CheckAnswers();
         Finishedquestions.Add(currentQuestion);
 
         UpdateScore((isCorrect) ? Questions[currentQuestion].AddScore : -Questions[currentQuestion].AddScore);
+        
 
-        var type = (IsFinished) ? UIManager.ResolutionScreenType.Finish : (isCorrect) ? UIManager.ResolutionScreenType.Correct : UIManager.ResolutionScreenType.Incorrect;
-
-        if (events.DispalyResolutonScreen != null)
-        {
-            events.DispalyResolutonScreen(type, Questions[currentQuestion].AddScore);
-        }
-
-        if(IEwaitTillNExtRound != null)
+        if (IEwaitTillNExtRound != null)
         {
             StopCoroutine(IEwaitTillNExtRound);
         }
@@ -164,7 +176,7 @@ public class GameManager : MonoBehaviour
         events.CurrentFinalScore += add;
 
         if(events.ScoreUpdated != null)
-        {
+        {   
             events.ScoreUpdated();
         }
     }

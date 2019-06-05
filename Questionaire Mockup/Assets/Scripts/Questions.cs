@@ -4,27 +4,7 @@ using UnityEngine;
 
 [System.Serializable]
 
-public struct Answer {
-    [SerializeField] private string info;
-    public string Info
-    {
-        get
-        {
-            return info;
-        }
-    }
-
-    [SerializeField] private bool iscorrect;
-    public bool IsCorrect
-    {
-        get
-        {
-            return iscorrect;
-        }
-    }
-}
 [CreateAssetMenu(fileName = "New question", menuName = "Quiz/new Question")]
-
 public class Questions : ScriptableObject
 {
     //for the type of answer user needed
@@ -60,13 +40,6 @@ public class Questions : ScriptableObject
         }
     }
 
-    [SerializeField] private int timer = 0;
-    public int Timer { get
-        {
-            return timer = 0;
-        }
-     }
-
     [SerializeField] private AnswerType answerType = AnswerType.Single;
     public AnswerType GetAnswerType
     {
@@ -94,5 +67,25 @@ public class Questions : ScriptableObject
             }
         }
         return CorrectAnswers;
+    }
+}
+public struct Answer
+{
+    [SerializeField] private string info;
+    public string Info
+    {
+        get
+        {
+            return info;
+        }
+    }
+
+    [SerializeField] private bool iscorrect;
+    public bool IsCorrect
+    {
+        get
+        {
+            return iscorrect;
+        }
     }
 }
