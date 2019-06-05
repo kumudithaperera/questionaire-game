@@ -22,6 +22,6 @@ MonoBehaviour:
     iscorrect: 0
   - info: The formation of rocks
     iscorrect: 0
-  userTimer: 1
-  answerType: 0
+  userTimer: 0
+  timer: 60
   addScore: 10
